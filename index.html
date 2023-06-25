@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Таймер</title>
 </head>
-<body style="color: white; background-color: black; margin: 0;">
+<body style="color: white; background-color: black; margin: 0; font-family: sans-serif;">
     <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
         <h1>
-            <span id="days"></span>д
-            <span id="hours"></span>ч
-            <span id="minutes"></span>м
-            <span id="seconds"></span>с
+            <span id="day"></span>д
+            <span id="hour"></span>ч
+            <span id="minute"></span>м
+            <span id="second"></span>с
         </h1>
     </div>
 
@@ -19,9 +19,17 @@
         const end = new Date('07/20/2023 15:00');
         
         const _second = 1000;
+        const _secondEl = document.getElementById('second')
+
         const _minute = _second * 60;
+        const _minuteEl = document.getElementById('minute')
+
         const _hour = _minute * 60;
+        const _hourEl = document.getElementById('hour')
+
         const _day = _hour * 24;
+        const _dayEl = document.getElementById('day')
+        
         let timer;
 
         function showRemaining() {
@@ -30,10 +38,10 @@
 
             if (distance < 0) {
                 clearInterval(timer);
-                document.getElementById('days').innerHTML = 0;
-                document.getElementById('hours').innerHTML = 0;
-                document.getElementById('minutes').innerHTML = 0;
-                document.getElementById('seconds').innerHTML = 0;
+                _dayEl.innerHTML = 0;
+                _hourEl.innerHTML = 0;
+                _minuteEl.innerHTML = 0;
+                _secondEl.innerHTML = 0;
                 return;
             }
 
@@ -42,13 +50,15 @@
             const minutes = Math.floor((distance % _hour) / _minute);
             const seconds = Math.floor((distance % _minute) / _second);
 
-            document.getElementById('days').innerHTML = days;
-            document.getElementById('hours').innerHTML = hours;
-            document.getElementById('minutes').innerHTML = minutes;
-            document.getElementById('seconds').innerHTML = seconds;
+            _dayEl.innerHTML = days;
+            _hourEl.innerHTML = hours;
+            _minuteEl.innerHTML = minutes;
+            _secondEl.innerHTML = seconds;
         }
 
-        timer = setInterval(showRemaining, 1);
+        showRemaining();
+
+        timer = setInterval(showRemaining, _second);
     </script>
 </body>
 </html>
