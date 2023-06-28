@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Таймер</title>
+    <style>
+        body {
+            color: white;
+            background-color: black;
+            margin: 0;
+            font-family: sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .clock {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
 </head>
-<body style="color: white; background-color: black; margin: 0; font-family: sans-serif;">
-    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+<body>
+    <div class="clock">
         <h1>
             <span id="day"></span>д
             <span id="hour"></span>ч
@@ -16,6 +33,32 @@
     </div>
 
     <script>
+        document.body.onclick = () => {
+            const doc = document;
+            const docEl = doc.documentElement;
+            const body = doc.body;
+
+            body.style.cursor === 'none' ? body.style.cursor = 'auto' : body.style.cursor = 'none';
+            
+            if ((doc.fullScreenElement && doc.fullScreenElement !== null) || (!doc.mozFullScreen && !doc.webkitIsFullScreen)) {
+                if (docEl.requestFullScreen) {
+                    docEl.requestFullScreen();
+                } else if (docEl.mozRequestFullScreen) {
+                    docEl.mozRequestFullScreen();
+                } else if (docEl.webkitRequestFullScreen) {
+                    docEl.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+            } else {
+                if (doc.cancelFullScreen) {
+                    doc.cancelFullScreen();
+                } else if (doc.mozCancelFullScreen) {
+                    doc.mozCancelFullScreen();
+                } else if (doc.webkitCancelFullScreen) {
+                    doc.webkitCancelFullScreen();
+                }
+            }
+        }
+
         const end = new Date('07/20/2023 15:00');
         
         const _second = 1000;
