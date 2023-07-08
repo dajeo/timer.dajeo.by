@@ -17,22 +17,63 @@
             -ms-user-select: none;
         }
 
+        p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
         .clock {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
+        }
+
+        .inner {
+            text-align: center;
+        }
+
+        .small {
+            font-size: 6vw;
+        }
+
+        .big {
+            font-size: 10vw;
         }
     </style>
 </head>
 <body>
     <div class="clock">
-        <h1>
-            <span id="day"></span>д
-            <span id="hour"></span>ч
-            <span id="minute"></span>м
-            <span id="second"></span>с
-        </h1>
+        <div class="inner">
+            <p>до выезда из Александровское</p>
+            <h1 class="small" id="from_alexandrovskoye">
+                <span></span>д
+                <span></span>ч
+                <span></span>м
+                <span></span>с
+            </h1>
+            
+            <p>до приелета в Салехард</p>
+            <h1 class="big" id="to_salekhard">
+                <span></span>д
+                <span></span>ч
+                <span></span>м
+                <span></span>с
+            </h1>
+            <p>до посадки на самолет</p>
+            <h1 class="small" id="boarding">
+                <span>0</span>д
+                <span>0</span>ч
+                <span>0</span>м
+                <span>0</span>с
+            </h1>
+        </div>
     </div>
 
     <script>
@@ -62,28 +103,29 @@
             }
         }
 
-        const end = new Date('07/20/2023 14:40 GMT+05:00');
+        const endFromAlexandrovskoye = new Date('07/20/2023 06:00 GMT+03:00')
+        const endToSalekhard = new Date('07/20/2023 14:40 GMT+05:00');
+        const endToBoarding = new Date('07/20/2023 08:00 GMT+03:00');
+        
+        const _fromAlexandrovskoyeEl = document.getElementById('from_alexandrovskoye')
+        const _toSalekhardEl = document.getElementById('to_salekhard')
+        const _boardingEl = document.getElementById('boarding')
         
         const _second = 1000;
-        const _secondEl = document.getElementById('second')
-
         const _minute = _second * 60;
-        const _minuteEl = document.getElementById('minute')
-
         const _hour = _minute * 60;
-        const _hourEl = document.getElementById('hour')
-
         const _day = _hour * 24;
-        const _dayEl = document.getElementById('day')
-        
-        let timer;
 
-        function showRemaining() {
+        function showRemaining(el, end) {
+            _dayEl = el.children[0]
+            _hourEl = el.children[1]
+            _minuteEl = el.children[2]
+            _secondEl = el.children[3]
+
             const now = new Date();
             const distance = end - now;
 
             if (distance < 0) {
-                clearInterval(timer);
                 _dayEl.innerHTML = 0;
                 _hourEl.innerHTML = 0;
                 _minuteEl.innerHTML = 0;
@@ -102,9 +144,13 @@
             _secondEl.innerHTML = seconds;
         }
 
-        showRemaining();
+        showRemaining(_fromAlexandrovskoyeEl, endFromAlexandrovskoye);
+        showRemaining(_toSalekhardEl, endToSalekhard);
+        showRemaining(_boardingEl, endToBoarding);
 
-        timer = setInterval(showRemaining, _second);
+        setInterval(showRemaining, _second, _fromAlexandrovskoyeEl, endFromAlexandrovskoye);
+        setInterval(showRemaining, _second, _toSalekhardEl, endToSalekhard);
+        setInterval(showRemaining, _second, _boardingEl, endToBoarding);
     </script>
 </body>
 </html>
