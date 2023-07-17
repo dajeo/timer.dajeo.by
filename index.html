@@ -184,13 +184,9 @@
             return
         }
 
-        const days = Math.floor(distance / _day)
-        const hours = Math.floor((distance % _day) / _hour)
-        const minutes = Math.floor((distance % _hour) / _minute)
-
-        _dayEl.innerHTML = days
-        _hourEl.innerHTML = hours
-        _minuteEl.innerHTML = minutes
+        _dayEl.innerHTML = Math.floor(distance / _day).toString()
+        _hourEl.innerHTML = Math.floor((distance % _day) / _hour).toString()
+        _minuteEl.innerHTML = Math.floor((distance % _hour) / _minute).toString()
     }
 
     showRemaining(_fromAlexandrovskoyeEl, endFromAlexandrovskoye)
